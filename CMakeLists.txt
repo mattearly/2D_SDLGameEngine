@@ -7,7 +7,7 @@ project(2D_GameEngine)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(2D_GameEngine src/main.cpp src/Game.cpp src/Game.h src/TextureManager.h src/TextureManager.cpp src/GameObject.cpp src/GameObject.h)
+add_executable(2D_GameEngine src/main.cpp src/Game.cpp src/Game.h src/TextureManager.h src/TextureManager.cpp src/GameObject.cpp src/GameObject.h src/Map.cpp src/Map.h)
 
 target_link_libraries(2D_GameEngine -lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -lSDL2_image -lSDL2_mixer -mwindows)
 

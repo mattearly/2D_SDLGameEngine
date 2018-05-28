@@ -20,8 +20,8 @@ void GameObject::Update() {
 
     dstRect.x = xpos;
     dstRect.y = ypos;
-    dstRect.w = srcRect.w * 2;
-    dstRect.h = srcRect.h * 2;
+    dstRect.w = srcRect.w / 2;
+    dstRect.h = srcRect.h / 2;
 }
 
 void GameObject::Render() {
