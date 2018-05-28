@@ -5,9 +5,9 @@
 #include <iostream>
 #include "Game.h"
 #include "TextureManager.h"
+#include "GameObject.h"
 
-SDL_Texture *player_texture;
-SDL_Rect srcRect, dstRect;
+GameObject *main_player, *enemy_player;
 
 Game::Game() = default;
 
@@ -29,11 +29,8 @@ void Game::init(const char *title, int xpos, int ypos, int width, int heigh, boo
         isRunning = true;
     } else { isRunning = false; }
 
-    player_texture = TextureManager::LoadTexture("../res/man_64x64.png", renderer);
-//    SDL_Surface *tmp_surface = IMG_Load("../res/man_64x64.png");
-//    player_texture = SDL_CreateTextureFromSurface(renderer, tmp_surface);
-//    SDL_FreeSurface(tmp_surface);
-
+    main_player = new GameObject("../res/man_64x64.png", renderer, 0, 0);
+    enemy_player = new GameObject("../res/enemy_64x64.png", renderer, 672, 0);
 
 }
 
@@ -50,9 +47,8 @@ void Game::handleEvents() {
 
 void Game::update() {
     update_count++;
-    dstRect.h = 64;
-    dstRect.w = 64;
-    dstRect.x = update_count;
+    main_player->Update();
+    enemy_player->Update();
     std::cout << update_count << std::endl;
 
 }
@@ -60,8 +56,8 @@ void Game::update() {
 void Game::render() {
     SDL_RenderClear(renderer);
 
-    SDL_RenderCopy(renderer, player_texture, nullptr, &dstRect);
-
+    main_player->Render();
+    enemy_player->Render();
     SDL_RenderPresent(renderer);
 }
 
