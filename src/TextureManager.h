@@ -9,7 +9,7 @@
 
 class TextureManager {
 public:
-    static SDL_Texture *LoadTexture(const char *file_name, SDL_Renderer *ren);
+    static SDL_Texture *LoadTexture(const char *file_name);
 };
 
 #endif //INC_2D_GAMEENGINE_TEXTUREMANAGER_H

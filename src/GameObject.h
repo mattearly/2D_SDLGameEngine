@@ -11,7 +11,7 @@
 class GameObject {
 
 public:
-    GameObject(const char *texturesheet, SDL_Renderer *ren, int x, int y);
+    GameObject(const char *texturesheet, int x, int y);
     ~GameObject();
 
     void Update();
@@ -23,7 +23,6 @@ private:
 
     SDL_Texture *object_texture;
     SDL_Rect srcRect, dstRect;
-    SDL_Renderer *renderer;
 
 };
 
