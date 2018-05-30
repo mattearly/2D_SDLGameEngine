@@ -15,11 +15,11 @@ public:
 
     ~Game();
 
-    void init(const char *title, int xpos, int ypos, int width, int heigh, bool fullscreen);
+    void init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen);
 
     void handleEvents();
 
-    void update();
+    void Update();
 
     void render();
 
@@ -33,7 +33,6 @@ private:
     bool isRunning;
     SDL_Window *window;
     SDL_Event event;
-    int update_count;
 
 
 };

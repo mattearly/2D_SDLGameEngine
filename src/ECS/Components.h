@@ -1,0 +1,14 @@
+//
+// Created by MJE on 5/28/2018.
+//
+
+#ifndef INC_2D_GAMEENGINE_COMPONENTS_H
+#define INC_2D_GAMEENGINE_COMPONENTS_H
+
+#include "EntityComponentSystem.h"
+#include "PositionComponent.h"
+#include "SpriteComponent.h"
+
+
+
+#endif //INC_2D_GAMEENGINE_COMPONENTS_H

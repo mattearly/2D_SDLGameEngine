@@ -3,7 +3,7 @@
 //
 
 #include "Map.h"
-#include "TextureManager.h"
+#include "ECS/TextureManager.h"
 
 int Level1[20][25] = {
         {2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2},
