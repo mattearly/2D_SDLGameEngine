@@ -6,6 +6,7 @@
 #include "Game.h"
 #include "Map.h"
 #include "ECS/Components.h"
+#include "Vector2D.h"
 
 Map *map;
 
@@ -36,7 +37,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 
     map = new Map();
 
-    player.addComponent<PositionComponent>(500, 500);
+    player.addComponent<TransformComponent>(500, 500);
     player.addComponent<SpriteComponent>("../res/man_64x64.png");
 
 }
@@ -57,7 +58,9 @@ void Game::Update() {
     manager.refresh();
     manager.Update();
 
-    if (player.getComponent<PositionComponent>().x() > 100) {
+    player.getComponent<TransformComponent>().position.Add(Vector2D(5,0));
+
+    if (player.getComponent<TransformComponent>().position.x > 100) {
         player.addComponent<SpriteComponent>().setTexture("../res/enemy_64x64.png");
     }
 

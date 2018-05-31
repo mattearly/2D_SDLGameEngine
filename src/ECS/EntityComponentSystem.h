@@ -92,7 +92,7 @@ public:
         return *static_cast<T *>(ptr);
     }
 
-//    gameobject.getComponenet<PositionComponent().setXpos(25);
+//    gameobject.getComponenet<TransformComponent().setXpos(25);
 };
 
 class Manager {
