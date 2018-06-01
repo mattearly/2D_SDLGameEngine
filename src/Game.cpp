@@ -36,7 +36,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     map = new Map();
 
     player.addComponent<TransformComponent>(0, 0);
-    player.addComponent<SpriteComponent>("../res/man_64x64.png");
+    player.addComponent<SpriteComponent>("../res/man_32x32.png");
     player.addComponent<KeyboardController>();
 
 }
