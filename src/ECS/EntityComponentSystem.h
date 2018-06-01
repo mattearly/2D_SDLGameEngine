@@ -122,9 +122,7 @@ public:
     }
 };
 
-class EntityComponentSystem {
 
-};
 
 
 #endif //INC_2D_GAMEENGINE_ENTITYCOMPONENTSYSTEM_H

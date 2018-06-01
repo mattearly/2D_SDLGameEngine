@@ -9,11 +9,9 @@
 #include "Vector2D.h"
 
 Map *map;
-
-SDL_Renderer *Game::renderer = nullptr;
-
 Manager manager;
-
+SDL_Renderer *Game::renderer = nullptr;
+SDL_Event Game::event;
 auto &player(manager.addEntity());
 
 Game::Game() = default;
@@ -37,8 +35,9 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 
     map = new Map();
 
-    player.addComponent<TransformComponent>(500, 500);
+    player.addComponent<TransformComponent>(0, 0);
     player.addComponent<SpriteComponent>("../res/man_64x64.png");
+    player.addComponent<KeyboardController>();
 
 }
 
@@ -54,16 +53,8 @@ void Game::handleEvents() {
 }
 
 void Game::Update() {
-
     manager.refresh();
     manager.Update();
-
-    player.getComponent<TransformComponent>().position.Add(Vector2D(5,0));
-
-    if (player.getComponent<TransformComponent>().position.x > 100) {
-        player.addComponent<SpriteComponent>().setTexture("../res/enemy_64x64.png");
-    }
-
 }
 
 void Game::render() {
