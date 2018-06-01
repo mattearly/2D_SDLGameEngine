@@ -13,6 +13,7 @@ Manager manager;
 SDL_Renderer *Game::renderer = nullptr;
 SDL_Event Game::event;
 auto &player(manager.addEntity());
+auto &wall(manager.addEntity());
 
 Game::Game() = default;
 
@@ -35,9 +36,14 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 
     map = new Map();
 
-    player.addComponent<TransformComponent>(0, 0);
+    player.addComponent<TransformComponent>(2);
     player.addComponent<SpriteComponent>("../res/man_32x32.png");
     player.addComponent<KeyboardController>();
+    player.addComponent<ColliderComponent>("player");
+
+    wall.addComponent<TransformComponent>(300.0f, 300.0f, 300, 20, 1);
+    wall.addComponent<SpriteComponent>("../res/wall.png");
+    wall.addComponent<ColliderComponent>("wall");
 
 }
 
@@ -55,6 +61,12 @@ void Game::handleEvents() {
 void Game::Update() {
     manager.refresh();
     manager.Update();
+
+    if (Collision::AABB(player.getComponent<ColliderComponent>().collider,
+                        wall.getComponent<ColliderComponent>().collider)) {
+        player.getComponent<TransformComponent>().scale = 1;
+        std::cout << "wall hit\n";
+    }
 }
 
 void Game::render() {

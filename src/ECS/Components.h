@@ -9,6 +9,7 @@
 #include "TransformComponent.h"
 #include "SpriteComponent.h"
 #include "KeyboardController.h"
+#include "ColliderComponent.h"
 
 
 #endif //INC_2D_GAMEENGINE_COMPONENTS_H

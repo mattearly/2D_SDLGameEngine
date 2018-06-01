@@ -12,7 +12,7 @@
 class SpriteComponent : public Component {
 
 private:
-    TransformComponent *transformComponent;
+    TransformComponent *transform;
     SDL_Texture *texture;
     SDL_Rect srcRect, dstRect;
 
@@ -24,23 +24,30 @@ public:
         setTexture(filepath);
     }
 
+    ~SpriteComponent() {
+        SDL_DestroyTexture(texture);
+    }
+
     void setTexture(const char *filepath) {
         texture = TextureManager::LoadTexture(filepath);
     }
 
     void init() override {
-        transformComponent = &entity->getComponent<TransformComponent>();
+        transform = &entity->getComponent<TransformComponent>();
         srcRect.x = srcRect.y = 0;
-        srcRect.w = srcRect.h = 64;
 
-        dstRect.w = dstRect.h = 64;
+        srcRect.w = transform->width;
+        srcRect.h = transform->height;
 
+//        dstRect.w = dstRect.h = 64;
 
     }
 
     void Update() override {
-        dstRect.x = (int) transformComponent->position.x;
-        dstRect.y = (int) transformComponent->position.y;
+        dstRect.x = (int) transform->position.x;
+        dstRect.y = (int) transform->position.y;
+        dstRect.w = transform->width * transform->scale;
+        dstRect.h = transform->height * transform->scale;
     }
 
     void Draw() override {
