@@ -1,85 +1,64 @@
-//
-// Created by MJE on 5/27/2018.
-//
-
 #include "Map.h"
-#include "TextureManager.h"
+#include "Game.h"
+#include <fstream>
+#include "ECS\ECS.h"
+#include "ECS\Components.h"
 
-int Level1[20][25] = {
-        {2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2},
-        {0, 0, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2, 2, 0, 0},
-        {0, 0, 0, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0, 0},
-        {0, 0, 0, 2, 2, 2, 0, 0, 2, 1, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 2, 0, 0, 0, 1, 1, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0, 0},
-        {1, 1, 1, 1, 1, 0, 2, 2, 2, 0, 0, 0, 0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0}
+extern Manager manager;
 
-};
-
-Map::Map() {
-    dirt = TextureManager::LoadTexture("../res/dirt.png");
-    grass = TextureManager::LoadTexture("../res/grass.png");
-    water = TextureManager::LoadTexture("../res/water.png");
-
-    LoadMap(Level1);
-
-    srcRect.x = srcRect.y = 0;
-    srcRect.w = dstRect.w = 32;
-    srcRect.h = dstRect.h = 32;
-
+Map::Map(std::string tID, int ms, int ts) : texID(tID), mapScale(ms), tileSize(ts)
+{
+	scaledSize = ms * ts;
 }
 
-Map::~Map() {
-    SDL_DestroyTexture(grass);
-    SDL_DestroyTexture(dirt);
-    SDL_DestroyTexture(water);
+Map::~Map()
+{
 }
 
-void Map::LoadMap(int map[20][25]) {
+void Map::LoadMap(std::string path, int sizeX, int sizeY)
+{
+	char c;
+	std::fstream mapFile;
+	mapFile.open(path);
 
-    for (int row = 0; row < 20; row++) {
-        for (int col = 0; col < 25; col++) {
-            level_map[row][col] = map[row][col];
-        }
-    }
+	int srcX, srcY;
 
+	for (int y = 0; y < sizeY; y++)
+	{
+		for (int x = 0; x < sizeX; x++)
+		{
+			mapFile.get(c);
+			srcY = atoi(&c) * tileSize;
+			mapFile.get(c);
+			srcX = atoi(&c) * tileSize;
+			AddTile(srcX, srcY, x * scaledSize, y * scaledSize);
+			mapFile.ignore();
+		}
+	}
+
+	mapFile.ignore();
+
+	for (int y = 0; y < sizeY; y++)
+	{
+		for (int x = 0; x < sizeX; x++)
+		{
+			mapFile.get(c);
+			if (c == '1')
+			{
+				auto& tcol(manager.addEntity());
+				tcol.addComponent<ColliderComponent>("terrain", x * scaledSize, y * scaledSize, scaledSize);
+				tcol.addGroup(Game::groupColliders);
+			}
+			mapFile.ignore();
+		}
+	}
+
+	mapFile.close();
 }
 
-void Map::DrawMap() {
-    int type = 0;
-    for (int row = 0; row < 20; row++) {
-        for (int col = 0; col < 25; col++) {
-
-            type = level_map[row][col];
-
-            dstRect.x = col * 32;
-            dstRect.y = row * 32;
-            switch (type) {
-                case 0:
-                    TextureManager::Draw(water, srcRect, dstRect);
-                    break;
-                case 1:
-                    TextureManager::Draw(grass, srcRect, dstRect);
-                    break;
-                case 2:
-                    TextureManager::Draw(dirt, srcRect, dstRect);
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
+void Map::AddTile(int srcX, int srcY, int xpos, int ypos)
+{
+	auto& tile(manager.addEntity());
+	tile.addComponent<TileComponent>(srcX, srcY, xpos, ypos, tileSize, mapScale, texID);
+	tile.addGroup(Game::groupMap);
 }

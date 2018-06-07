@@ -1,15 +1,11 @@
-//
-// Created by MJE on 5/30/2018.
-//
-
-#ifndef INC_2D_GAMEENGINE_VECTOR2D_H
-#define INC_2D_GAMEENGINE_VECTOR2D_H
+#pragma once
 
 #include <iostream>
 
 class Vector2D {
 public:
-    float x, y;
+    float x;
+    float y;
 
     Vector2D();
 
@@ -19,7 +15,7 @@ public:
 
     Vector2D &Subtract(const Vector2D &vec);
 
-    Vector2D &Multipy(const Vector2D &vec);
+    Vector2D &Multiply(const Vector2D &vec);
 
     Vector2D &Divide(const Vector2D &vec);
 
@@ -45,5 +41,3 @@ public:
 
     friend std::ostream &operator<<(std::ostream &stream, const Vector2D &vec);
 };
-
-#endif //INC_2D_GAMEENGINE_VECTOR2D_H

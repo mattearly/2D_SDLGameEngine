@@ -1,24 +1,13 @@
-//
-// Created by MJE on 5/27/2018.
-//
-
 #include "TextureManager.h"
 
-SDL_Texture* TextureManager::LoadTexture(const char *filename) {
-    SDL_Surface *tmp_surface = IMG_Load(filename);
-    SDL_Texture *texture = SDL_CreateTextureFromSurface(Game::renderer, tmp_surface);
+SDL_Texture *TextureManager::LoadTexture(const char *texture) {
+    SDL_Surface *tempSurface = IMG_Load(texture);
+    SDL_Texture *tex = SDL_CreateTextureFromSurface(Game::renderer, tempSurface);
+    SDL_FreeSurface(tempSurface);
 
-    SDL_FreeSurface(tmp_surface);
-    return texture;
-
+    return tex;
 }
 
-void TextureManager::Draw(SDL_Texture* texture, SDL_Rect &srcR, SDL_Rect &dstR) {
-
-    SDL_RenderCopy(Game::renderer, texture, &srcR, &dstR);
-
+void TextureManager::Draw(SDL_Texture *tex, SDL_Rect src, SDL_Rect dest, SDL_RendererFlip flip) {
+    SDL_RenderCopyEx(Game::renderer, tex, &src, &dest, 0, nullptr, flip);
 }
-
-
-
-

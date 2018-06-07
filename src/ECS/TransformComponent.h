@@ -1,20 +1,11 @@
-//
-// Created by MJE on 5/30/2018.
-//
-
-#ifndef INC_2D_GAMEENGINE_POSITIONCOMPONENT_H
-#define INC_2D_GAMEENGINE_POSITIONCOMPONENT_H
+#pragma once
 
 #include "Components.h"
 #include "../Vector2D.h"
 
 class TransformComponent : public Component {
-private:
-
 public:
-
     Vector2D position;
-
     Vector2D velocity;
 
     int height = 32;
@@ -23,9 +14,19 @@ public:
 
     int speed = 3;
 
+    bool blocked = false;
+
+    TransformComponent() {
+        position.Zero();
+    }
 
     TransformComponent(int sc) {
+        position.Zero();
         scale = sc;
+    }
+
+    TransformComponent(float x, float y) {
+        position.Zero();
     }
 
     TransformComponent(float x, float y, int h, int w, int sc) {
@@ -36,19 +37,13 @@ public:
         scale = sc;
     }
 
-    TransformComponent() {
-        velocity.Zero();
-    }
-
     void init() override {
         velocity.Zero();
     }
 
-    void Update() override {
-        position.x += velocity.x * speed;
-        position.y += velocity.y * speed;
+    void update() override {
+        position.x += static_cast<int>(velocity.x * speed);
+        position.y += static_cast<int>(velocity.y * speed);
     }
 
 };
-
-#endif //INC_2D_GAMEENGINE_POSITIONCOMPONENT_H

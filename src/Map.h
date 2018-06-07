@@ -1,26 +1,20 @@
-//
-// Created by MJE on 5/27/2018.
-//
+#pragma once
+#include <string>
 
-#ifndef INC_2D_GAMEENGINE_MAP_H
-#define INC_2D_GAMEENGINE_MAP_H
-#include "Game.h"
-
-class Map {
+class Map 
+{
 public:
-    Map();
-    ~Map();
+	 
+	Map(std::string tID, int ms, int ts);
+	~Map();
 
-    void LoadMap(int level_map[20][25]);
-    void DrawMap();
+	void LoadMap(std::string path, int sizeX, int sizeY);
+	void AddTile(int srcX, int srcY, int xpos, int ypos);
 
 private:
-    SDL_Rect srcRect, dstRect;
-    SDL_Texture *dirt, *grass, *water;
-
-    int level_map[20][25];
+	std::string texID;
+	int mapScale;
+	int tileSize;
+	int scaledSize;
 
 };
-
-
-#endif //INC_2D_GAMEENGINE_MAP_H

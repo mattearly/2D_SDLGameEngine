@@ -1,15 +1,10 @@
-//
-// Created by MJE on 5/28/2018.
-//
+#pragma once
 
-#ifndef INC_2D_GAMEENGINE_COMPONENTS_H
-#define INC_2D_GAMEENGINE_COMPONENTS_H
-
-#include "EntityComponentSystem.h"
+#include "ECS.h"
 #include "TransformComponent.h"
 #include "SpriteComponent.h"
 #include "KeyboardController.h"
 #include "ColliderComponent.h"
-
-
-#endif //INC_2D_GAMEENGINE_COMPONENTS_H
+#include "TileComponent.h"
+#include "ProjectileComponent.h"
+#include "UILabel.h"

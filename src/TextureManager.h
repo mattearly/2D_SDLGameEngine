@@ -1,16 +1,11 @@
-//
-// Created by MJE on 5/27/2018.
-//
-
-#ifndef INC_2D_GAMEENGINE_TEXTUREMANAGER_H
-#define INC_2D_GAMEENGINE_TEXTUREMANAGER_H
+#pragma once
 
 #include "Game.h"
 
 class TextureManager {
-public:
-    static SDL_Texture *LoadTexture(const char *file_name);
-    static void Draw(SDL_Texture* texture, SDL_Rect &srcR, SDL_Rect &dstR);
-};
 
-#endif //INC_2D_GAMEENGINE_TEXTUREMANAGER_H
+public:
+    static SDL_Texture *LoadTexture(const char *fileName);
+
+    static void Draw(SDL_Texture *tex, SDL_Rect src, SDL_Rect dest, SDL_RendererFlip flip);
+};
